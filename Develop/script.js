@@ -49,7 +49,7 @@ function writePassword() {
 
     function numericQuestion () {
       var type = "numeric";
-      var uppercaseChoice = window.prompt("Should the password include numeric characters?\nAnswer should be 'yes' or 'no'.");
+      var numericChoice = window.prompt("Should the password include numeric characters?\nAnswer should be 'yes' or 'no'.");
 
       console.log(numericChoice);
       choice = numericChoice.toUpperCase();
@@ -59,7 +59,7 @@ function writePassword() {
 
     function specialQuestion () {
       var type = "special";
-      var uppercaseChoice = window.prompt("Should the password include special characters?\nAnswer should be 'yes' or 'no'.");
+      var specialChoice = window.prompt("Should the password include special characters?\nAnswer should be 'yes' or 'no'.");
 
       console.log(specialChoice);
       choice = specialChoice.toUpperCase();
@@ -107,6 +107,7 @@ function writePassword() {
           else if(type == "special") {
             typeString = "Special characters ";
             specialApply = false;
+            return specialApply;
           }
           window.alert("You answered no. " + typeString + "will not be included in the password.");
 
@@ -129,6 +130,16 @@ function writePassword() {
     numericQuestion();
     specialQuestion();
     
+    console.log("lc: " + lowercaseApply + "\nuc: " + uppercaseApply + "\nnc: " + numericApply + "\nsc: " + specialApply);
+
+    if((lowercaseApply == false) && 
+      (uppercaseApply == false) && 
+      (numericApply == false) && 
+      (specialApply == false)) {
+      window.alert("At least one character type must be selected. Please try again.");
+      generatePassword();
+    }
+
     password = "beans";
     return password;
   }
@@ -143,16 +154,16 @@ function writePassword() {
 generateBtn.addEventListener("click", writePassword);
 
 
-// WHEN I click the button to generate a password
-// THEN I am presented with a series of prompts for password criteria
-// WHEN prompted for password criteria
-// THEN I select which criteria to include in the password
+//** */ WHEN I click the button to generate a password
+//** */ THEN I am presented with a series of prompts for password criteria
+//** */ WHEN prompted for password criteria
+//** */ THEN I select which criteria to include in the password
 //** */ WHEN prompted for the length of the password
 //** */ THEN I choose a length of at least 8 characters and no more than 128 characters
-// WHEN asked for character types to include in the password
-// THEN I confirm whether or not to include *lowercase, *uppercase, numeric, and/or special characters
-// WHEN I answer each prompt
-// THEN my input should be validated and at least one character type should be selected
+//** */ WHEN asked for character types to include in the password
+//** */ THEN I confirm whether or not to include *lowercase, *uppercase, numeric, and/or special characters
+//** */ WHEN I answer each prompt
+//** */ THEN my input should be validated and at least one character type should be selected
 // WHEN all prompts are answered
 // THEN a password is generated that matches the selected criteria
 // WHEN the password is generated
