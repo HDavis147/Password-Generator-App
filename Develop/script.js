@@ -11,7 +11,7 @@ function writePassword() {
   function generatePassword() {
     var lowercaseApply;
     var uppercaseApply;
-    var numberApply;
+    var numericApply;
     var specialApply;
 
 
@@ -47,6 +47,25 @@ function writePassword() {
       choiceAndTypeAssignment(choice, type);
     }
 
+    function numericQuestion () {
+      var type = "numeric";
+      var uppercaseChoice = window.prompt("Should the password include numeric characters?\nAnswer should be 'yes' or 'no'.");
+
+      console.log(numericChoice);
+      choice = numericChoice.toUpperCase();
+      console.log(choice);
+      choiceAndTypeAssignment(choice, type);
+    }
+
+    function specialQuestion () {
+      var type = "special";
+      var uppercaseChoice = window.prompt("Should the password include special characters?\nAnswer should be 'yes' or 'no'.");
+
+      console.log(specialChoice);
+      choice = specialChoice.toUpperCase();
+      console.log(choice);
+      choiceAndTypeAssignment(choice, type);
+    }
 
     // Brings in values choice and type from the questions, alerts the user of the outcome, and returns a boolean
     function choiceAndTypeAssignment (choice, type) {
@@ -62,6 +81,14 @@ function writePassword() {
             typeString = "Uppercase letters ";
             uppercaseApply = true;
           }
+          else if(type == "numeric") {
+            typeString = "Numbers ";
+            numericApply = true;
+          }
+          else if(type == "special") {
+            typeString = "Special characters ";
+            specialApply = true;
+          }
           window.alert("You answered yes. " + typeString + "will be included in the password.");
 
       } else if(choice == "NO") {
@@ -73,20 +100,34 @@ function writePassword() {
             typeString = "Uppercase letters ";
             uppercaseApply = false;
           }
+          else if(type == "numeric") {
+            typeString = "Numbers ";
+            numericApply = false;
+          }
+          else if(type == "special") {
+            typeString = "Special characters ";
+            specialApply = false;
+          }
           window.alert("You answered no. " + typeString + "will not be included in the password.");
 
       } else {
-          window.alert("Invalid answer. Starting over.");
+          window.alert("Invalid answer. Please try again.");
           if(type == "lowercase") {
             lowercaseQuestion();
           } else if (type == "uppercase"){
             uppercaseQuestion();
+          } else if (type == "numeric"){
+            numericQuestion();
+          } else if (type == "special"){
+            specialQuestion();
           }
       }
     }
 
     lowercaseQuestion();
     uppercaseQuestion();
+    numericQuestion();
+    specialQuestion();
     
     password = "beans";
     return password;
@@ -109,7 +150,7 @@ generateBtn.addEventListener("click", writePassword);
 //** */ WHEN prompted for the length of the password
 //** */ THEN I choose a length of at least 8 characters and no more than 128 characters
 // WHEN asked for character types to include in the password
-// THEN I confirm whether or not to include lowercase, uppercase, numeric, and/or special characters
+// THEN I confirm whether or not to include *lowercase, *uppercase, numeric, and/or special characters
 // WHEN I answer each prompt
 // THEN my input should be validated and at least one character type should be selected
 // WHEN all prompts are answered
