@@ -1,6 +1,3 @@
-// Assignment code here
-
-
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
@@ -13,7 +10,15 @@ function writePassword() {
     var uppercaseApply;
     var numericApply;
     var specialApply;
-
+    var lowercaseCharacters = "abcdefghijklmnopqrstuvwxyz";
+    var lowerArray = lowercaseCharacters.split("");
+    var uppercaseCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var upperArray = uppercaseCharacters.split("");
+    var numericCharacters = "0123456789";
+    var numericArray = numericCharacters.split("");
+    var specialCharacters = " !\"#$%&'()*+,-./:;<=>?@[]^_`{|}~";
+    var specialArray = specialCharacters.split("");
+    var password = [];
 
     //Allows users to choose password length
     var pwLength = window.prompt("How long should the password be? \nMinimum: 8\nMaximum: 128");
@@ -28,10 +33,7 @@ function writePassword() {
     function lowercaseQuestion () {
       var type = "lowercase";
       var lowercaseChoice = window.prompt("Should the password include lowercase characters?\nAnswer should be 'yes' or 'no'.");
-
-      console.log(lowercaseChoice);
       choice = lowercaseChoice.toUpperCase();
-      console.log(choice);
       choiceAndTypeAssignment(choice, type);
     }
 
@@ -40,37 +42,29 @@ function writePassword() {
     function uppercaseQuestion () {
       var type = "uppercase";
       var uppercaseChoice = window.prompt("Should the password include uppercase characters?\nAnswer should be 'yes' or 'no'.");
-
-      console.log(uppercaseChoice);
       choice = uppercaseChoice.toUpperCase();
-      console.log(choice);
       choiceAndTypeAssignment(choice, type);
     }
 
+    //Allows user to choose to use numeric characters
     function numericQuestion () {
       var type = "numeric";
       var numericChoice = window.prompt("Should the password include numeric characters?\nAnswer should be 'yes' or 'no'.");
-
-      console.log(numericChoice);
       choice = numericChoice.toUpperCase();
-      console.log(choice);
       choiceAndTypeAssignment(choice, type);
     }
 
+    //Allows user to choose to use special characters
     function specialQuestion () {
       var type = "special";
       var specialChoice = window.prompt("Should the password include special characters?\nAnswer should be 'yes' or 'no'.");
-
-      console.log(specialChoice);
       choice = specialChoice.toUpperCase();
-      console.log(choice);
       choiceAndTypeAssignment(choice, type);
     }
 
     // Brings in values choice and type from the questions, alerts the user of the outcome, and returns a boolean
     function choiceAndTypeAssignment (choice, type) {
       var typeString = "";
-      console.log("You are in the assignment function.\nType: " + type + "\nChoice: " + choice);
 
       if(choice == "YES") {
           if(type == "lowercase") {
@@ -107,11 +101,11 @@ function writePassword() {
           else if(type == "special") {
             typeString = "Special characters ";
             specialApply = false;
-            return specialApply;
           }
           window.alert("You answered no. " + typeString + "will not be included in the password.");
 
       } else {
+          // Else case catches invalid answers and returns the user to the correct character prompt function based on type value
           window.alert("Invalid answer. Please try again.");
           if(type == "lowercase") {
             lowercaseQuestion();
@@ -125,13 +119,13 @@ function writePassword() {
       }
     }
 
+    // Runs the character type prompt functions and allows the user to return to where they were if invalid input is detected
     lowercaseQuestion();
     uppercaseQuestion();
     numericQuestion();
     specialQuestion();
-    
-    console.log("lc: " + lowercaseApply + "\nuc: " + uppercaseApply + "\nnc: " + numericApply + "\nsc: " + specialApply);
 
+    // Validates that at least one character type has been chosen
     if((lowercaseApply == false) && 
       (uppercaseApply == false) && 
       (numericApply == false) && 
@@ -140,31 +134,37 @@ function writePassword() {
       generatePassword();
     }
 
-    password = "beans";
+    var finalArray = [];
+
+    // Checks what character types were chosen and adds those characters to an array
+    if (lowercaseApply == true) {
+      finalArray = lowerArray;
+    }
+    if (uppercaseApply == true) {
+      finalArray = finalArray.concat(upperArray);
+    }if (numericApply == true) {
+      finalArray = finalArray.concat(numericArray);
+    }if (specialApply == true) {
+      finalArray = finalArray.concat(specialArray);
+    }
+
+    // Iterates through password length, adding 1 character at a time to the password array via the finalArray built in the last step
+    for(i = pwLength; i>0; i--) {
+      symbolPlace = Math.floor(Math.random() * finalArray.length);
+      symbol = finalArray[symbolPlace];
+      password = password.concat(symbol);
+    }
+
+    // Passes the password array out of the generatePassword function
     return password;
   }
 
   var passwordText = document.querySelector("#password");
 
-  passwordText.value = password;
+  // Sets the password text to the password array, joined with no separators
+  passwordText.value = password.join("");
 
 }
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
-
-
-//** */ WHEN I click the button to generate a password
-//** */ THEN I am presented with a series of prompts for password criteria
-//** */ WHEN prompted for password criteria
-//** */ THEN I select which criteria to include in the password
-//** */ WHEN prompted for the length of the password
-//** */ THEN I choose a length of at least 8 characters and no more than 128 characters
-//** */ WHEN asked for character types to include in the password
-//** */ THEN I confirm whether or not to include *lowercase, *uppercase, numeric, and/or special characters
-//** */ WHEN I answer each prompt
-//** */ THEN my input should be validated and at least one character type should be selected
-// WHEN all prompts are answered
-// THEN a password is generated that matches the selected criteria
-// WHEN the password is generated
-// THEN the password is either displayed in an alert or written to the page
