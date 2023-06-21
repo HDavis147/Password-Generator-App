@@ -4,7 +4,7 @@ This repository holds the code for my random password generator application.
 ## Description
 This application will prompt the user for their desired password criteria and generate a randomized password using the selected options.
 
-![Password Generator screenshot](./assets/password-generator.png)
+![Password Generator screenshot](./assets/Password-Generator.png)
 
 ## Usage
 
